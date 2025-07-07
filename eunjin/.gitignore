@@ -5,6 +5,13 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
+# Gradle 캐시 무시
+gradle/wrapper/caches/
+.gradle/
+build/
+out/
+
+
 ### STS ###
 .apt_generated
 .classpath
@@ -35,3 +42,25 @@ out/
 
 ### VS Code ###
 .vscode/
+
+# IntelliJ IDEA
+.idea/
+*.iml
+
+# Eclipse / STS
+.project
+.classpath
+.settings/
+.apt_generated/
+.factorypath
+
+# VSCode
+.vscode/
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+
+
