@@ -8,8 +8,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Controller
@@ -35,6 +41,23 @@ public class ArticleController {
         log.info(saved.toString());
         //System.out.println(saved.toString()); //article이 DB(데이터베이스)에 잘 저장되는지 출력
         return "";
+    }
+    @GetMapping("/articles/{id}")
+    public String show(@PathVariable Long id, Model model){
+        log.info("id="+ id);
+        //Optional<Article> articleEntity = articleRepository.findById(id); //id를 조회해 데이터 가져오기(반환형:Optional<Article>)
+        Article articleEntity = articleRepository.findById(id).orElse(null);//해당 id값이 없으면 null 반환
+        //Optional<T>은 "값이 있을 수도 있고, 없을 수도 있는 T"를 감싸는 Wrapper 클래스야.
+        model.addAttribute("article", articleEntity);//  model.addAttribute("name" , Object value); 모델에 데이터 등록하기
+        return "articles/show";
+    }
+    @GetMapping("/articles")
+    public String index(Model model){
+        ArrayList<Article> articleEntityList = articleRepository.findAll();//모든 Article 데이터 가져오기
+        //위 반환 타입이 Iterable 인데 작성한 타입은 List이기 떄문에 오류발생 ->다운 캐스팅해 문제 해결 또는 오버라이딩(LIst도 가능)
+        model.addAttribute("articleList", articleEntityList);//모델에 데이터 등록하기
+
+        return "articles/index";//뷰페이지 설정하기
     }
 }
 
