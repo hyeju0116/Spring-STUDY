@@ -40,7 +40,7 @@ public class ArticleController {
         Article saved = articleRepository.save(article); //article 엔티티를 저장해 saved 객체에 반환(윗 줄 article)
         log.info(saved.toString());
         //System.out.println(saved.toString()); //article이 DB(데이터베이스)에 잘 저장되는지 출력
-        return "";
+        return "redirect:/articles/"+saved.getId();
     }
     @GetMapping("/articles/{id}")
     public String show(@PathVariable Long id, Model model){
